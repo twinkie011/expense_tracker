@@ -5,6 +5,8 @@ sealed class CreateExpenseState extends Equatable {
   
   @override
   List<Object> get props => [];
+
+  String? get error => null;
 }
 
 final class CreateExpenseInitial extends CreateExpenseState {}

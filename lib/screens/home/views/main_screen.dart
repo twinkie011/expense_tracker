@@ -1,10 +1,13 @@
 import 'dart:math';
+import 'package:expense_repository/expense_repository.dart';
 import 'package:expenses_tracker/data/data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class MainScreen extends StatelessWidget {
-  const MainScreen({super.key});
+  final List<Expense>extepense;
+  const MainScreen(this.extepense, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -225,7 +228,7 @@ class MainScreen extends StatelessWidget {
             const SizedBox(height: 20),
             Expanded(
               child: ListView.builder(
-                itemCount: transactionsData.length,
+                itemCount: extepense.length,
                 itemBuilder: (context, int i) {
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 16.0),
@@ -248,20 +251,21 @@ class MainScreen extends StatelessWidget {
                                         width: 50,
                                         height: 50,
                                         decoration: BoxDecoration(
-                                          color: transactionsData[i]['color'],
+                                          color: Color(extepense[i].category.color),
                                           shape: BoxShape.circle
                                         ),
                                       ),
-                                      transactionsData[i]['icon'],
-                                      // const Icon(
-                                      //   Icons.food_bank,
-                                      //   color: Colors.white,
-                                      // )
+                                      Image.asset(
+                                        'assets/${extepense[i].category.icon}.png',
+                                        scale: 2,
+                                        //color: Colors.white,
+                                      )
                                     ],
                                   ),
-                                  SizedBox(width: 10),
+                                  // ignore: prefer_const_constructors
+                                  SizedBox(width: 12),
                                   Text(
-                                    transactionsData[i]['name'],
+                                    extepense[i].category.name,
                                     style: TextStyle(
                                     fontSize: 14,
                                     color: Theme.of(context).colorScheme.onBackground,
@@ -274,7 +278,7 @@ class MainScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     Text(
-                                    transactionsData[i]['totalAmount'],
+                                    "\$${extepense[i].amount}.00",
                                     style: TextStyle(
                                     fontSize: 14,
                                     color: Theme.of(context).colorScheme.onBackground,
@@ -282,7 +286,7 @@ class MainScreen extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                    transactionsData[i]['date'],
+                                    DateFormat('dd/MM/yyyy').format(extepense[i].date),
                                     style: TextStyle(
                                     fontSize: 14,
                                     color: Theme.of(context).colorScheme.outline,
